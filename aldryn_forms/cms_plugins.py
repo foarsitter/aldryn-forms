@@ -51,7 +51,7 @@ from .validators import is_valid_recipient
 
 class FormElement(CMSPluginBase):
     # Cache everything, except post requests
-
+    cache = True
     module = _('Forms')
 
     def get_cache_expiration(self, request, instance, placeholder):
