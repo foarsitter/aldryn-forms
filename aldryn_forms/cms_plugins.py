@@ -46,8 +46,8 @@ from .validators import is_valid_recipient
 
 
 class FormElement(CMSPluginBase):
-    # Don't cache anything.
-    cache = False
+    # Cache everything, except post requests
+    cache = True
     module = _('Forms')
 
 
