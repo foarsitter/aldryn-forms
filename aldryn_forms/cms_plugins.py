@@ -2,6 +2,7 @@ from typing import Dict
 
 from PIL import Image
 from aldryn_forms.models import FormPlugin
+from cms.constants import MAX_EXPIRATION_TTL
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 from django import forms
@@ -47,8 +48,14 @@ from .validators import is_valid_recipient
 
 class FormElement(CMSPluginBase):
     # Cache everything, except post requests
-    cache = True
+
     module = _('Forms')
+
+    def get_cache_expiration(self, request, instance, placeholder):
+        if request.method == 'POST':
+            return super(FormElement, self).get_cache_expiration(request, instance, placeholder)
+
+        return 3600*12
 
 
 class FieldContainer(FormElement):
