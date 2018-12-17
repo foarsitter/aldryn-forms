@@ -1,6 +1,8 @@
 from typing import Dict
 
 from PIL import Image
+from cms.constants import MAX_EXPIRATION_TTL
+
 from aldryn_forms.models import FormPlugin
 from cms.constants import MAX_EXPIRATION_TTL, EXPIRE_NOW
 from cms.utils.conf import get_cms_setting
@@ -51,7 +53,7 @@ from .validators import is_valid_recipient
 
 class FormElement(CMSPluginBase):
     # Cache everything, except post requests
-    cache = True
+
     module = _('Forms')
 
     def get_cache_expiration(self, request, instance, placeholder):
