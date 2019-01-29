@@ -2,10 +2,13 @@ from typing import Dict
 
 from PIL import Image
 from aldryn_forms.models import FormPlugin
-from cms.constants import MAX_EXPIRATION_TTL
+from cms.constants import MAX_EXPIRATION_TTL, EXPIRE_NOW
+from cms.utils.conf import get_cms_setting
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 from django import forms
+from django.conf import settings
+from django.db.models import query
 from django.contrib import messages
 from django.contrib.admin import TabularInline
 from django.core.validators import MinLengthValidator
@@ -53,9 +56,11 @@ class FormElement(CMSPluginBase):
 
     def get_cache_expiration(self, request, instance, placeholder):
         if request.method == 'POST':
-            return super(FormElement, self).get_cache_expiration(request, instance, placeholder)
+            return EXPIRE_NOW
 
-        return 3600*12
+        cache_settings = get_cms_setting('CACHE_DURATIONS')
+
+        return cache_settings['content']
 
 
 class FieldContainer(FormElement):
