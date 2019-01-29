@@ -1,7 +1,8 @@
 from typing import Dict
 
 from PIL import Image
-from cms.constants import MAX_EXPIRATION_TTL
+from cms.constants import MAX_EXPIRATION_TTL, EXPIRE_NOW
+from cms.utils.conf import get_cms_setting
 
 from aldryn_forms.models import FormPlugin
 from cms.constants import MAX_EXPIRATION_TTL, EXPIRE_NOW
